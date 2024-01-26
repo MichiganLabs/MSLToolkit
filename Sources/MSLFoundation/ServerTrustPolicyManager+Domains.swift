@@ -56,14 +56,7 @@ internal final class MSLServerTrustManager: ServerTrustManager {
     private let serverTrustEvaluating: ServerTrustEvaluating
     
     public init(charlesCertBundle: Bundle) {
-        #if DEBUG
-            // We only want to use the Charles Proxy Evaluator when we are debugging
-            self.serverTrustEvaluating = CharlesProxyEvaluator(certBundle: charlesCertBundle)
-        #else
-            // PROD should ALWAYS use the default trust settings
-            self.serverTrustEvaluating = DefaultTrustEvaluator()
-        #endif
-        
+        self.serverTrustEvaluating = CharlesProxyEvaluator(certBundle: charlesCertBundle)
         super.init(evaluators: [:])
     }
     

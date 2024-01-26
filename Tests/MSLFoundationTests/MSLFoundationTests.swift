@@ -3,6 +3,6 @@ import XCTest
 
 final class MSLFoundationTests: XCTestCase {
     func testExample() throws {
-        MSLFoundation.generateServerTrustManager(charlesCertBundle: <#T##Bundle#>)
+
     }
 }

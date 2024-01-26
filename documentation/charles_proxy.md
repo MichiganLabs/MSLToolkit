@@ -1,6 +1,6 @@
 #  [Charles Proxy](https://www.charlesproxy.com/download/)
 
-MSLFoundation will only allow for SSL proxying when the application is being run in DEBUG mode.
+# ServerTrustManager should only be used for DEBUG builds and should **never** be used for Release builds.
 
 ## Why Use a Proxy?
 A proxy allows you to inspect and manipulate http requests made from web and mobile apps:
@@ -41,17 +41,29 @@ let package = Package(
 ``` 
 
 ### Include in your `Session` setup
-Wherever a `Session` is being created in your project you will now want to include the `serverTrustManager`.
+Wherever a `Session` is being created in your project you will now want to include the `serverTrustManager`. The start of an `ApiService` using leveraging the certificate is below.
 ```
-guard
-    let url = Bundle.module.url(forResource: "SSLCertificates", withExtension: "bundle"),
-    let bundle = Bundle(url: url)
-else {
-    return
+public class ApiService: ApiServiceProtocol, HearseeServiceProtocol {
+    let session: Session
+
+    public init(serverUrl: String) {
+        var serverTrustManager: ServerTrustManager?
+
+        #if DEBUG
+            // We only want to use the Charles Proxy Evaluator when we are debugging
+            if
+                let url = Bundle.module.url(forResource: "SSLCertificates", withExtension: "bundle"),
+                let bundle = Bundle(url: url)
+            {
+                serverTrustManager = MSLFoundation.generateServerTrustManager(charlesCertBundle: bundle)
+            }
+        #endif
+
+        session = Session(
+            serverTrustManager: serverTrustManager,
+            eventMonitors: [NetworkLogger()]
+        )
+    }
 }
 
-session = Session(
-    serverTrustManager: MSLFoundation.generateServerTrustManager(charlesCertBundle: bundle),
-    ...
-)
 ```
