@@ -1,4 +1,4 @@
-# MSLFoundation
+# MSLToolKit
 
 This library will contain the basic tools MichiganLabs recommends for iOS projects. 
 

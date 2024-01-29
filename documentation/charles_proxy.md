@@ -55,7 +55,7 @@ public class ApiService: ApiServiceProtocol, HearseeServiceProtocol {
                 let url = Bundle.module.url(forResource: "SSLCertificates", withExtension: "bundle"),
                 let bundle = Bundle(url: url)
             {
-                serverTrustManager = MSLFoundation.generateServerTrustManager(charlesCertBundle: bundle)
+                serverTrustManager = MSLNetworking.generateServerTrustManager(charlesCertBundle: bundle)
             }
         #endif
 
