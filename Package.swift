@@ -23,6 +23,14 @@ let package = Package(
             name: "MSLNetworking",
             targets: ["MSLNetworking"]
         ),
+        .library(
+            name: "MSLSwiftUI",
+            targets: ["MSLSwiftUI"]
+        ),
+        .library(
+            name: "MSLUIKit",
+            targets: ["MSLUIKit"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1"))
@@ -45,6 +53,14 @@ let package = Package(
             dependencies: [
                 "MSLFoundation"
             ]
+        ),
+        .target(
+            name: "MSLSwiftUI",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLUIKit",
+            dependencies: []
         ),
         .testTarget(
             name: "MSLFoundationTests",
