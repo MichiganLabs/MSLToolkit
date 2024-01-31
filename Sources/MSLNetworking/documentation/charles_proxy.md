@@ -43,7 +43,7 @@ let package = Package(
 ### Include in your `Session` setup
 Wherever a `Session` is being created in your project you will now want to include the `serverTrustManager`. The start of an `ApiService` using leveraging the certificate is below.
 ```
-public class ApiService: ApiServiceProtocol, HearseeServiceProtocol {
+public class ApiService {
     let session: Session
 
     public init(serverUrl: String) {
