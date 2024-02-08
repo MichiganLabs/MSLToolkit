@@ -14,11 +14,18 @@ final class CoreDataPublisher<
 
     private(set) var fetchedRequestController: NSFetchedResultsController<EntityType>
     private let toModelHandler: ((EntityType) -> EntityType.Model?)?
-    /// Unforunately NSFetchResultsController doesn't honor limits on published changes, so we have to enforce it here
+
+    /// Limit's the number of objects returned.
+    /// Unforunately NSFetchResultsController doesn't honor limits on published changes, so we have to enforce it here.
     private let limit: Int?
 
     @PublisherConvertible
     private var results = [EntityType.Model]()
+
+    /// Returns a publisher for the results emitted from CoreData
+    public var publisher: AnyPublisher<[EntityType.Model], Never> {
+        return self.$results
+    }
 
     public init(
         fetchedRequestController: NSFetchedResultsController<EntityType>,
@@ -38,11 +45,7 @@ final class CoreDataPublisher<
         }
     }
 
-    public var publisher: AnyPublisher<[EntityType.Model], Never> {
-        return self.$results
-    }
-
-    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let controller = controller as? NSFetchedResultsController<EntityType> else { return }
         self.emitObjects(for: controller)
     }

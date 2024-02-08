@@ -12,6 +12,7 @@ import UIKit
 /// )
 /// ```
 public extension UIViewController {
+    /// Defines the various options for animating between views
     struct AnimationOptions {
         let style: AnimationStyle
         let direction: AnimationDirection
@@ -29,15 +30,23 @@ public extension UIViewController {
     }
 
     private enum AnimationTransition {
+        /// View is coming in
         case present
+
+        /// View is going out
         case dismiss
     }
 
+    /// Represents the type of animation that should occur for the specified UIViewController
     enum AnimationStyle {
+        /// Attempts to mimic the iOS default `present` animation
         case replace
+
+        /// Attempts to mimic the iOS default `push` animation
         case swipe
     }
 
+    /// The direction the animation should occur
     enum AnimationDirection {
         case left
         case right
@@ -45,6 +54,7 @@ public extension UIViewController {
         case down
     }
 
+    /// Animate a UIViewController onto the screen
     func present(
         to newScreen: UIViewController,
         withOptions options: AnimationOptions,
@@ -58,6 +68,7 @@ public extension UIViewController {
         )
     }
 
+    /// Animate a UIViewController off the screen
     func dismiss(
         to newScreen: UIViewController,
         withOptions options: AnimationOptions,
