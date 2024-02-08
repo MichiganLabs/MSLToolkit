@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MSLFoundation",
+    name: "MSLToolKit",
     platforms: [
         .iOS(.v14),
         .macOS(.v10_14)
@@ -13,7 +13,24 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MSLFoundation",
-            targets: ["MSLFoundation"]),
+            targets: ["MSLFoundation"]
+        ),
+        .library(
+            name: "MSLCoreData",
+            targets: ["MSLCoreData"]
+        ),
+        .library(
+            name: "MSLNetworking",
+            targets: ["MSLNetworking"]
+        ),
+        .library(
+            name: "MSLSwiftUI",
+            targets: ["MSLSwiftUI"]
+        ),
+        .library(
+            name: "MSLUIKit",
+            targets: ["MSLUIKit"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1"))
@@ -23,12 +40,31 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MSLFoundation",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLNetworking",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
             ]
         ),
+        .target(
+            name: "MSLCoreData",
+            dependencies: [
+                "MSLFoundation"
+            ]
+        ),
+        .target(
+            name: "MSLSwiftUI",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLUIKit",
+            dependencies: []
+        ),
         .testTarget(
             name: "MSLFoundationTests",
-            dependencies: ["MSLFoundation"]),
+            dependencies: ["MSLFoundation"]
+        ),
     ]
 )
