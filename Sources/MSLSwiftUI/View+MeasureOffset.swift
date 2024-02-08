@@ -7,7 +7,6 @@ import SwiftUI
 ///     ScrollView(showsIndicators: false) {
 ///         content()
 ///             .background(theme.background)
-///             .padding(.top, imageSize.height - geo.safeAreaInsets.top)
 ///             .measureOffset(in: .named("scroll")) { offset in
 ///                 self.offset = offset
 ///             }

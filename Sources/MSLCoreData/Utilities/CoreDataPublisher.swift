@@ -8,23 +8,22 @@ protocol ModelConvertible {
 }
 
 /// Wraps NSFetchedResultsController and converts the delegate callback methods into a publisher (stream)
-final class DataStorePublisher<
-    Model,
+final class CoreDataPublisher<
     EntityType: ModelConvertible & NSFetchRequestResult
 >: NSObject, NSFetchedResultsControllerDelegate, Publishing {
 
     private(set) var fetchedRequestController: NSFetchedResultsController<EntityType>
-    private let toModelHandler: ((EntityType) -> Model?)?
+    private let toModelHandler: ((EntityType) -> EntityType.Model?)?
     /// Unforunately NSFetchResultsController doesn't honor limits on published changes, so we have to enforce it here
     private let limit: Int?
 
     @PublisherConvertible
-    private var results = [Model]()
+    private var results = [EntityType.Model]()
 
     public init(
         fetchedRequestController: NSFetchedResultsController<EntityType>,
         limit: Int? = nil,
-        toModelHandler: ((EntityType) -> Model?)? = nil
+        toModelHandler: ((EntityType) -> EntityType.Model?)? = nil
     ) {
         self.fetchedRequestController = fetchedRequestController
         self.limit = limit
@@ -39,7 +38,7 @@ final class DataStorePublisher<
         }
     }
 
-    public var publisher: AnyPublisher<[Model], Never> {
+    public var publisher: AnyPublisher<[EntityType.Model], Never> {
         return self.$results
     }
 
@@ -49,11 +48,11 @@ final class DataStorePublisher<
     }
 
     private func emitObjects(for controller: NSFetchedResultsController<EntityType>) {
-        let fetchedOjects = controller.fetchedObjects?.compactMap({ requestResult -> Model? in
+        let fetchedOjects = controller.fetchedObjects?.compactMap({ requestResult -> EntityType.Model? in
             if let toModelHandler = self.toModelHandler {
                 return toModelHandler(requestResult)
             } else {
-                return requestResult.toModel() as? Model
+                return requestResult.toModel()
             }
         })
 

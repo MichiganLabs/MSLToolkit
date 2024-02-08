@@ -1,6 +1,9 @@
 import Combine
 
 /// A store that retains a reference to object(s) that are required to stay alive in order to function properly
+///
+/// This class is particularly useful for `CoreDataPublisher` defined in the `MSLCoreData` package, but it's use case
+/// is not limited to only this instance.
 final public class DataStore<Model> {
     private let reference: (any Publishing)?
     public let publisher: AnyPublisher<Model, Never>

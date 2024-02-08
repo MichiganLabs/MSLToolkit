@@ -5,6 +5,8 @@ MSL Core Data provides common helper functions to work with [Core Data.](https:/
 * [Installation](#installation)
 
 ## Features
+* [x] [DatabaseManager](./documentation/database_manager.md)
+* [x] [CoreDataPublisher](./documentation/coredata_publisher.md)
 
 ## Installation
 

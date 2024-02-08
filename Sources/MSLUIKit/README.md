@@ -5,6 +5,7 @@ MSL UIKit provides common helper functions to work with [UIKit.](https://develop
 * [Installation](#installation)
 
 ## Features
+* [x] [Coordinator](./documentation/coordinator.md)
 
 ## Installation
 
