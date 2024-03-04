@@ -47,7 +47,7 @@ public class ApiService {
     let session: Session
 
     public init(serverUrl: String) {
-        var serverTrustManager: ServerTrustManager?
+        var serverTrustManager = MSLServerTrustManager()
 
         #if DEBUG
             // We only want to use the Charles Proxy Evaluator when we are debugging
@@ -55,7 +55,7 @@ public class ApiService {
                 let url = Bundle.module.url(forResource: "SSLCertificates", withExtension: "bundle"),
                 let bundle = Bundle(url: url)
             {
-                serverTrustManager = MSLNetworking.generateServerTrustManager(charlesCertBundle: bundle)
+                serverTrustManager.defaultEvaluator = MSLNetworking.charlesProxyEvaluator(charlesCertBundle: bundle)
             }
         #endif
 
