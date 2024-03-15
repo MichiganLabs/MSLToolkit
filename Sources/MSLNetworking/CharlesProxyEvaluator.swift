@@ -48,18 +48,3 @@ internal class CharlesProxyEvaluator: ServerTrustEvaluating {
         }
     }
 }
-
-
-internal final class MSLServerTrustManager: ServerTrustManager {
-    
-    private let serverTrustEvaluating: ServerTrustEvaluating
-    
-    public init(charlesCertBundle: Bundle) {
-        self.serverTrustEvaluating = CharlesProxyEvaluator(certBundle: charlesCertBundle)
-        super.init(evaluators: [:])
-    }
-    
-    override public func serverTrustEvaluator(forHost host: String) throws -> ServerTrustEvaluating? {
-        return self.serverTrustEvaluating
-    }
-}
