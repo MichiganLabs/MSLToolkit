@@ -3,11 +3,11 @@ import Foundation
 
 internal class CharlesProxyEvaluator: ServerTrustEvaluating {
     let certBundle: Bundle
-    
+
     init(certBundle: Bundle) {
         self.certBundle = certBundle
     }
-    
+
     func evaluate(_ trust: SecTrust, forHost host: String) throws {
         self.trust(trust, host: host)
         try Self.evaluate(trust: trust)
