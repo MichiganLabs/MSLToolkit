@@ -8,6 +8,7 @@ public extension UserDefaults {
     func getRawRepresentable<T: RawRepresentable>(forKey key: String) throws -> T where T.RawValue: Codable {
         let enumRaw = try self.getCodable(forKey: key) as T.RawValue
 
+        // swiftlint:disable:next explicit_init
         guard let enumValue = T.init(rawValue: enumRaw) else { throw CodableError.badData }
 
         return enumValue

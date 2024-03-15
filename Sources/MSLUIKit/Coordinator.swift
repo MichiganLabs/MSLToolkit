@@ -1,5 +1,6 @@
 import UIKit
 
+// swiftlint:disable line_length
 /// Protocol to coordinate UIViewControllers
 ///
 /// Coordinators are objects that are designed to live a level above

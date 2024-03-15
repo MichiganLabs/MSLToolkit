@@ -159,6 +159,7 @@ fileprivate extension UIViewController {
         )
     }
 
+    // swiftlint:disable cyclomatic_complexity
     private func animateSwipe(
         fromScreen: UIViewController,
         toScreen: UIViewController,
@@ -256,6 +257,7 @@ fileprivate extension UIViewController {
             }
         )
     }
+    // swiftlint:enable cyclomatic_complexity
 
     private func addShadow(to view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
