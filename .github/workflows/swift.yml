@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: swift test -v
   SwiftLint:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: GitHub Action for SwiftLint
