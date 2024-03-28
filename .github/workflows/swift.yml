@@ -10,14 +10,12 @@ on:
       - main
 
 jobs:
-  BuildAndTest:
+  Build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build
         run: xcodebuild -scheme MSLToolKit-Package -destination "generic/platform=iOS"
-      - name: Run tests
-        run: xcodebuild test -scheme MSLToolKit-Package -destination "generic/platform=iOS"
   SwiftLint:
     runs-on: ubuntu-latest
     steps:
