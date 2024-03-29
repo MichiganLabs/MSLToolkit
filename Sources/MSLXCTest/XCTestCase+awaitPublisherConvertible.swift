@@ -3,7 +3,7 @@ import Foundation
 import XCTest
 
 public extension XCTestCase {
-    /// Reusable test case to wait for a publisher to publish values
+    /// Reusable test case to wait for a PublisherConvertible publisher to publish a value
     func awaitPublisherConvertible<T>(
         _ publisherConvertible: AnyPublisher<T, Never>,
         timeout: TimeInterval = 10
@@ -22,7 +22,7 @@ public extension XCTestCase {
         return publishedValue
     }
 
-    /// Reusable test case to wait for a publisher to publish values
+    /// Reusable test case to wait for an @Published's publisher to emit a value
     func awaitPublished<T>(
         _ published: Published<T>.Publisher,
         timeout: TimeInterval = 4,

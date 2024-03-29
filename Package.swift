@@ -80,7 +80,7 @@ let package = Package(
         ),
         .target(
             name: "MSLXCTest.example",
-            dependencies: []
+            dependencies: ["MSLCombine", "MSLXCTest"]
         ),
         .testTarget(
             name: "MSLFoundationTests",
