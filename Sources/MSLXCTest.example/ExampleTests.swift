@@ -22,14 +22,6 @@ class TestObservableObject: ObservableObject {
 }
 
 final class ExampleTest: XCTestCase {
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func test_publisherConvertibleEmitsNewValue() {
         let service = TestService()
         service.updateTestValue(true)

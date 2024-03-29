@@ -5,6 +5,9 @@ enum UITestLaunchArgument: String {
 
 /// An example implementation of a UI Test class
 final class HearseeAppUITests: ExampleUITestCase {
+    var testValue = 0
+
+    // Is run once before all tests are executed
     override func setUp() {
         launchArguments = [
             UITestLaunchArgument.TestCase.rawValue,
@@ -12,7 +15,9 @@ final class HearseeAppUITests: ExampleUITestCase {
         super.setUp()
     }
 
+    // Is run once after all tests are executed
     override func tearDown() {
+        print(testValue)
         super.tearDown()
     }
 
