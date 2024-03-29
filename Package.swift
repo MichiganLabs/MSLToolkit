@@ -55,6 +55,10 @@ let package = Package(
             dependencies: []
         ),
         .target(
+            name: "MSLCombine.example",
+            dependencies: ["MSLCombine"]
+        ),
+        .target(
             name: "MSLNetworking",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
