@@ -41,7 +41,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1"))
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -63,7 +63,7 @@ let package = Package(
         .target(
             name: "MSLCoreData",
             dependencies: [
-                "MSLFoundation"
+                "MSLFoundation",
             ]
         ),
         .target(
@@ -76,6 +76,10 @@ let package = Package(
         ),
         .target(
             name: "MSLXCTest",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLXCTest.example",
             dependencies: []
         ),
         .testTarget(
