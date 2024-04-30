@@ -4,7 +4,7 @@ enum UITestLaunchArgument: String {
 }
 
 /// An example implementation of a UI Test class
-final class HearseeAppUITests: ExampleUITestCase {
+final class ExampleUITests: ExampleUITestCase {
     var testValue = 0
 
     // Is run once before all tests are executed
