@@ -112,14 +112,14 @@ public class AppMigrator {
         let currentVersionNumbers = self.currentVersion.split(separator: ".").compactMap { Int($0) }
         let versionNumbers = version.split(separator: ".").compactMap { Int($0) }
 
-        for i in 0...currentVersionNumbers.count - 1 {
+        for index in 0...currentVersionNumbers.count - 1 {
             // Success if we've run out of numbers to check
-            if versionNumbers.count - 1 < i {
+            if versionNumbers.count - 1 < index {
                 break
             }
 
             // Fails if a number at a location is greater than the current version
-            if versionNumbers[i] > currentVersionNumbers[i] {
+            if versionNumbers[index] > currentVersionNumbers[index] {
                 return false
             }
         }
