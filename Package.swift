@@ -55,10 +55,6 @@ let package = Package(
             dependencies: []
         ),
         .target(
-            name: "MSLCombine.example",
-            dependencies: ["MSLCombine"]
-        ),
-        .target(
             name: "MSLNetworking",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
@@ -81,10 +77,6 @@ let package = Package(
         .target(
             name: "MSLXCTest",
             dependencies: []
-        ),
-        .target(
-            name: "MSLXCTest.example",
-            dependencies: ["MSLCombine", "MSLXCTest"]
         ),
         .testTarget(
             name: "MSLFoundationTests",
