@@ -12,12 +12,16 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "MSLFoundation",
-            targets: ["MSLFoundation"]
+            name: "MSLCombine",
+            targets: ["MSLCombine"]
         ),
         .library(
             name: "MSLCoreData",
             targets: ["MSLCoreData"]
+        ),
+        .library(
+            name: "MSLFoundation",
+            targets: ["MSLFoundation"]
         ),
         .library(
             name: "MSLNetworking",
@@ -31,15 +35,23 @@ let package = Package(
             name: "MSLUIKit",
             targets: ["MSLUIKit"]
         ),
+        .library(
+            name: "MSLXCTest",
+            targets: ["MSLXCTest"]
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1"))
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.8.1")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MSLFoundation",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLCombine",
             dependencies: []
         ),
         .target(
@@ -51,7 +63,7 @@ let package = Package(
         .target(
             name: "MSLCoreData",
             dependencies: [
-                "MSLFoundation"
+                "MSLFoundation",
             ]
         ),
         .target(
@@ -60,6 +72,10 @@ let package = Package(
         ),
         .target(
             name: "MSLUIKit",
+            dependencies: []
+        ),
+        .target(
+            name: "MSLXCTest",
             dependencies: []
         ),
         .testTarget(
