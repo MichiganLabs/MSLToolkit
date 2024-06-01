@@ -6,10 +6,11 @@ MSL XCTest provides common helper functions to work with [XCTest.](https://devel
 
 ## Features
 * [x] XCTestCase
-  * acceptLocationPermissionPopup
   * awaitPublished
   * awaitPublisherConvertible
-  * deleteApp
+  * Springboard
+      * deleteApp
+      * getAlert
 
 ## Installation
 
