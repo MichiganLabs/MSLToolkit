@@ -8,4 +8,4 @@ This library will contain the basic tools MichiganLabs recommends for iOS projec
 * [MSLNetworking](./Sources/MSLNetworking/README.md)
 * [MSLSwiftUI](./Sources/MSLSwiftUI/README.md)
 * [MSLUIKit](./Sources/MSLUIKit/README.md)
-* [MSLXCKit](./Sources/MSLXCTest/README.md)
+* [MSLXCTest](./Sources/MSLXCTest/README.md)
