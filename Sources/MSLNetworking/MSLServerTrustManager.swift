@@ -3,7 +3,6 @@ import Alamofire
 /// A Server Trust Manager with designed to uses the provided `evaluators` first, and then
 /// fall back to the `defaultEvaluator` in the case an evaluator was not provided for a specific host.
 public final class MSLServerTrustManager: ServerTrustManager {
-
     public var defaultEvaluator: ServerTrustEvaluating?
 
     public init(

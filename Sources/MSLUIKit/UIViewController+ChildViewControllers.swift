@@ -35,12 +35,12 @@ public extension UIViewController {
     /// Replace existing child view controllers with the one provided and embed it inside the `container` view.
     func replaceContents(with childViewController: UIViewController, in container: UIView? = nil) {
         // Remove previous child view controllers (if there are any)
-        self.children.forEach {
-            self.remove(childViewController: $0)
+        for child in self.children {
+            self.remove(childViewController: child)
         }
 
         // Add new child view controller
-        if let container = container {
+        if let container {
             self.embed(childViewController: childViewController, in: container)
         } else {
             self.embed(childViewController: childViewController)

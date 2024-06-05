@@ -7,7 +7,7 @@ public extension UserDefaults {
         case badData
     }
 
-    func setCodable<T: Codable>(_ value: T, forKey key: String) throws {
+    func setCodable(_ value: some Codable, forKey key: String) throws {
         // Putting `value` in an array is a hack for allowing fragments
         let data = try JSONEncoder().encode([value])
         self.setValue(data, forKey: key)

@@ -1,7 +1,7 @@
 import Alamofire
 import Foundation
 
-internal class CharlesProxyEvaluator: ServerTrustEvaluating {
+class CharlesProxyEvaluator: ServerTrustEvaluating {
     let certBundle: Bundle
 
     init(certBundle: Bundle) {

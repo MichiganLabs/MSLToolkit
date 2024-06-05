@@ -24,9 +24,11 @@ public struct OffsetKey: PreferenceKey {
 
 public extension View {
     func measureOffset(in coords: CoordinateSpace, _ f: @escaping (CGFloat) -> Void) -> some View {
-        self.overlay(GeometryReader { geo in
-            Color.clear.preference(key: OffsetKey.self, value: geo.frame(in: coords).origin.y)
-        }
-        .onPreferenceChange(OffsetKey.self, perform: f))
+        self.overlay(
+            GeometryReader { geo in
+                Color.clear.preference(key: OffsetKey.self, value: geo.frame(in: coords).origin.y)
+            }
+            .onPreferenceChange(OffsetKey.self, perform: f)
+        )
     }
 }

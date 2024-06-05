@@ -1,8 +1,7 @@
-import XCTest
 @testable import MSLFoundation
+import XCTest
 
 final class MSLFoundationTests: XCTestCase {
-
     struct MockCodableObject: Codable {
         let name: String
         let profile: URL?

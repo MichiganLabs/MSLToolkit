@@ -1,6 +1,7 @@
 import Foundation
 
 /// Manages the migration process between specific versions of an app. Especially useful for bug / hot fixes.
+/// Migrations are executed in the order they are supplied in the array.
 public class AppMigrator {
     /// The key used to look up the migration history
     public let migrationHistoryKey: String
@@ -12,9 +13,8 @@ public class AppMigrator {
     public let currentVersion: String
 
     /// Describes which migrations have successfully completed/failed
-    private lazy var migrationHistory: [String: Bool] = {
-        return UserDefaults.standard.object(forKey: self.migrationHistoryKey) as? [String: Bool] ?? [String: Bool]()
-    }()
+    private lazy var migrationHistory: [String: Bool] = UserDefaults.standard
+        .object(forKey: self.migrationHistoryKey) as? [String: Bool] ?? [String: Bool]()
 
     public convenience init(bundle: Bundle) {
         guard let build = bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String else {
@@ -112,7 +112,7 @@ public class AppMigrator {
         let currentVersionNumbers = self.currentVersion.split(separator: ".").compactMap { Int($0) }
         let versionNumbers = version.split(separator: ".").compactMap { Int($0) }
 
-        for index in 0...currentVersionNumbers.count - 1 {
+        for index in 0 ... currentVersionNumbers.count - 1 {
             // Success if we've run out of numbers to check
             if versionNumbers.count - 1 < index {
                 break

@@ -1,6 +1,7 @@
 import UIKit
 
 // swiftlint:disable line_length
+// swiftformat:disable wrapSingleLineComments
 /// Protocol to coordinate UIViewControllers
 ///
 /// Coordinators are objects that are designed to live a level above
@@ -56,6 +57,8 @@ public protocol Coordinator: AnyObject {
     /// Put any de-init logic here.
     func finish()
 }
+
+// swiftformat:enable wrapSingleLineComments
 // swiftlint:enable line_length
 
 public extension Coordinator {
@@ -98,7 +101,7 @@ public protocol CoordinatorGroup: Coordinator {
 }
 
 public extension CoordinatorGroup {
-    func eject(coordinator: Coordinator) {}
+    func eject(coordinator _: Coordinator) {}
 
     /// Convenience method for starting a subtask, retaining the coordinator
     /// and showing the tasks initial view controller
@@ -128,7 +131,7 @@ public extension CoordinatorGroup {
 
         // Finish all child coordinators if applicable
         if let coordinatorGroup = coordinator as? CoordinatorGroup {
-            coordinatorGroup.childCoordinators.forEach { child in
+            for child in coordinatorGroup.childCoordinators {
                 coordinatorGroup.finish(child: child)
             }
         }
@@ -163,7 +166,7 @@ public extension CoordinatorGroup {
 
     /// Hot swaps out all current coordinators with the ones provided
     func replace(with coordinators: [Coordinator]) {
-        self.childCoordinators.forEach { coordinator in
+        for coordinator in self.childCoordinators {
             self.finish(child: coordinator)
         }
 
