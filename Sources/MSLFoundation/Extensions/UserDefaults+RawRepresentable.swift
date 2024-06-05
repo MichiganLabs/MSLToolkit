@@ -9,7 +9,7 @@ public extension UserDefaults {
         let enumRaw = try self.getCodable(forKey: key) as T.RawValue
 
         // swiftlint:disable:next explicit_init
-        guard let enumValue = T.init(rawValue: enumRaw) else { throw CodableError.badData }
+        guard let enumValue = T(rawValue: enumRaw) else { throw CodableError.badData }
 
         return enumValue
     }

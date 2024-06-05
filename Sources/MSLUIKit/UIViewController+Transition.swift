@@ -83,12 +83,12 @@ public extension UIViewController {
     }
 }
 
-fileprivate extension UIViewController {
+private extension UIViewController {
     private func animate(
         transition: AnimationTransition,
         options: AnimationOptions,
         to newScreen: UIViewController,
-        completion: ((Bool) -> Void)? = nil
+        completion _: ((Bool) -> Void)? = nil
     ) {
         guard let currentScreen = self.children.first else {
             self.replaceContents(with: newScreen)
@@ -183,7 +183,7 @@ fileprivate extension UIViewController {
             switch direction {
             case .left:
                 toScreen.view.transform = CGAffineTransform(
-                    translationX: (self.view.frame.maxX / 4), y: 0
+                    translationX: self.view.frame.maxX / 4, y: 0
                 )
             case .right:
                 toScreen.view.transform = CGAffineTransform(
@@ -205,11 +205,10 @@ fileprivate extension UIViewController {
             }
         }
 
-        let keyFrameAnimation: UIView.AnimationOptions
-        if transition == .dismiss {
-            keyFrameAnimation = .curveEaseInOut
+        let keyFrameAnimation: UIView.AnimationOptions = if transition == .dismiss {
+            .curveEaseInOut
         } else {
-            keyFrameAnimation = .curveEaseInOut
+            .curveEaseInOut
         }
 
         UIView.animateKeyframes(
@@ -257,6 +256,7 @@ fileprivate extension UIViewController {
             }
         )
     }
+
     // swiftlint:enable cyclomatic_complexity
 
     private func addShadow(to view: UIView) {

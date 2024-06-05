@@ -1,5 +1,5 @@
-import Foundation
 import CoreData
+import Foundation
 
 public final class DatabaseManager {
     public let name: String
@@ -56,7 +56,7 @@ public final class DatabaseManager {
                 container.persistentStoreDescriptions = [persistentStoreDescription]
             }
 
-            container.loadPersistentStores(completionHandler: { (_, error) in
+            container.loadPersistentStores(completionHandler: { _, error in
                 if let error = error as NSError? {
                     fatalError("Unresolved error \(error), \(error.userInfo)")
                 }

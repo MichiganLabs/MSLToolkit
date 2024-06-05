@@ -1,5 +1,5 @@
-import CoreData
 import Combine
+import CoreData
 import MSLFoundation
 
 protocol ModelConvertible {
@@ -11,7 +11,6 @@ protocol ModelConvertible {
 final class CoreDataPublisher<
     EntityType: ModelConvertible & NSFetchRequestResult
 >: NSObject, NSFetchedResultsControllerDelegate, Publishing {
-
     private(set) var fetchedRequestController: NSFetchedResultsController<EntityType>
     private let toModelHandler: ((EntityType) -> EntityType.Model?)?
 
@@ -51,17 +50,18 @@ final class CoreDataPublisher<
     }
 
     private func emitObjects(for controller: NSFetchedResultsController<EntityType>) {
-        let fetchedOjects = controller.fetchedObjects?.compactMap({ requestResult -> EntityType.Model? in
+        let fetchedOjects = controller.fetchedObjects?.compactMap { requestResult -> EntityType.Model? in
             if let toModelHandler = self.toModelHandler {
                 return toModelHandler(requestResult)
             } else {
                 return requestResult.toModel()
             }
-        })
+        }
 
         if let limit = self.limit,
-           let fetchedOjects = fetchedOjects,
-           fetchedOjects.count >= limit {
+           let fetchedOjects,
+           fetchedOjects.count >= limit
+        {
             self.results = Array(fetchedOjects.prefix(upTo: limit))
         } else {
             self.results = fetchedOjects ?? []

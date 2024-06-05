@@ -1,9 +1,9 @@
 import Combine
 
 ///
-/// @PublisherConvertible provides a convenient way to build a publisher around a specific property. 
+/// @PublisherConvertible provides a convenient way to build a publisher around a specific property.
 /// This is particularly useful when you want to subscribe to the changing of the property's values.
-/// 
+///
 /// Example:
 ///
 /// ```
@@ -20,7 +20,7 @@ import Combine
 public class PublisherConvertible<T> {
     public var wrappedValue: T {
         willSet {
-            subject.send(newValue)
+            self.subject.send(newValue)
         }
     }
 
@@ -30,6 +30,6 @@ public class PublisherConvertible<T> {
 
     private lazy var subject = CurrentValueSubject<T, Never>(wrappedValue)
     public var projectedValue: AnyPublisher<T, Never> {
-        subject.eraseToAnyPublisher()
+        self.subject.eraseToAnyPublisher()
     }
 }

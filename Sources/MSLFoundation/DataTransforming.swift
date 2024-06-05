@@ -8,7 +8,6 @@ public protocol DataTransforming {
 }
 
 public extension DataTransforming where Self: NSObject & NSCoding {
-
     func toData() throws -> Data {
         return try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
     }
@@ -29,7 +28,7 @@ public extension DataTransforming where Self: NSObject & NSCoding {
 
 extension Optional: DataTransforming where Wrapped: DataTransforming {
     public func toData() throws -> Data {
-        if case .some(let wrapped) = self {
+        if case let .some(wrapped) = self {
             return try wrapped.toData()
         } else {
             return Data()
