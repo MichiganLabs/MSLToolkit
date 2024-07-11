@@ -4,7 +4,7 @@ import Combine
 ///
 /// This class is particularly useful for `CoreDataPublisher` defined in the `MSLCoreData` package, but it's use case
 /// is not limited to only this instance.
-final public class DataStore<Model> {
+public final class DataStore<Model> {
     private let reference: (any Publishing)?
     public let publisher: AnyPublisher<Model, Never>
 

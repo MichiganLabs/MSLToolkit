@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// A convenience initializer for creating a `Color` from a hex string.
 public extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

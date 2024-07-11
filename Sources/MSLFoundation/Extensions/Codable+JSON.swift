@@ -23,8 +23,8 @@ public extension Encodable {
     }
 }
 
-extension Decodable {
-    public static func json(from string: String, decoder: JSONDecoder = JSONDecoder()) -> Self? {
+public extension Decodable {
+    static func json(from string: String, decoder: JSONDecoder = JSONDecoder()) -> Self? {
         guard let data = string.data(using: .utf8) else { return nil }
         return try? decoder.decode(self, from: data)
     }
