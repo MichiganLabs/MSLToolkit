@@ -36,6 +36,7 @@ public final class BackgroundTaskManager {
             self.handleBackgroundTask(task)
         }
 
+        // Observe the app entering the foreground
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.handleActivate(_:)),
@@ -43,6 +44,7 @@ public final class BackgroundTaskManager {
             object: nil
         )
 
+        // Observe the app entering the background
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.handleDeactivate(_:)),
