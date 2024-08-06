@@ -34,6 +34,7 @@ public protocol OperationWorkProvider: AnyObject {
     /// Indicates if this job is allowed to run when the app is backgrounded
     var canRunInBackground: Bool { get }
 
+    /// All conditions must be true in order for this worker to run
     var conditions: [OperationWorkProviderCondition] { get }
 
     /// Returns operations that this provider would like to be added to the queue
