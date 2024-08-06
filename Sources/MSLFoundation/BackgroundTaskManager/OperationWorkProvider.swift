@@ -67,4 +67,9 @@ public extension OperationWorkProvider {
     var canRunInBackground: Bool {
         return true
     }
+
+    // Defaults to no conditions
+    var conditions: [OperationWorkProviderCondition] {
+        return []
+    }
 }

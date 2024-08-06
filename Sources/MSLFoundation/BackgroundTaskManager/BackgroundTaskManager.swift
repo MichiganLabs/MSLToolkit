@@ -88,10 +88,10 @@ extension BackgroundTaskManager {
     }
 
     @objc private func handleDeactivate(_ notification: Notification) {
-        self.scheduleBackgroundScan()
+        self.scheduleBackgroundTasks()
     }
 
-    private func scheduleBackgroundScan() {
+    private func scheduleBackgroundTasks() {
         let backgroundTask = BGAppRefreshTaskRequest(identifier: self.taskIdentifier)
         backgroundTask.earliestBeginDate = self.queue.nextRunDate
 
@@ -103,7 +103,7 @@ extension BackgroundTaskManager {
                 logger.debug("\(tasks.count) background tasks scheduled:\n\(details)")
             }
         } catch {
-            logger.error("Failed to schedule background refresh task!")
+            logger.error("Failed to schedule background tasks!")
             logger.error("\(error.localizedDescription)")
         }
     }
@@ -111,7 +111,7 @@ extension BackgroundTaskManager {
     private func handleBackgroundTask(_ task: BGAppRefreshTask) {
         defer {
             // Schedule the next background task
-            self.scheduleBackgroundScan()
+            self.scheduleBackgroundTasks()
         }
 
         logger.info("App woke up for background refresh task: \(task.description)")

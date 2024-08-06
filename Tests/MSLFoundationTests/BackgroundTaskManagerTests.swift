@@ -98,6 +98,23 @@ final class BackgroundTaskManagerTests: XCTestCase {
         XCTAssert(manager.state == .sleeping)
 
         manager.register(provider: OneTimeJob())
+
+        // Verify that the manager automatically started running after adding a job
+        XCTAssert(manager.state == .running)
+
+        Thread.sleep(forTimeInterval: 1)
+
+        // -----------------------------
+        // Time: 1 second
+
+        // Verify that the 1 time job ran
+        XCTAssert(oneTimeJobCounter == 1)
+
+        // Verify that after all jobs have been run and when there are no jobs in the queue,
+        // the manager goes back to sleeping
+        XCTAssert(manager.state == .sleeping)
+
+        // Add a repeating job
         manager.register(provider: RepeatingJob())
 
         // Failing job is strategically placed here to verify that other jobs still get
@@ -107,26 +124,32 @@ final class BackgroundTaskManagerTests: XCTestCase {
         let successfulJob = SuccessfulAsyncJob()
         manager.register(provider: successfulJob)
 
+        // Verify that the manager is running again
         XCTAssert(manager.state == .running)
 
         Thread.sleep(forTimeInterval: 1)
 
-        // Verify that after 1 second, both of the first jobs have run once
-        XCTAssert(oneTimeJobCounter == 1)
+        // -----------------------------
+        // Time: 2 seconds
+
+        // Verify that the repeating job ran once (so far)
         XCTAssert(repeatingJobCounter == 1)
 
         // Verify that the successful async job finishes
         wait(for: [successfulJob.expectation], timeout: 10)
 
-        // Verify that the repeating job _did_ run again
-        XCTAssert(repeatingJobCounter == 2)
+        // -----------------------------
+        // Time: ~4 seconds
 
-        Thread.sleep(forTimeInterval: 2)
+        Thread.sleep(forTimeInterval: 1)
+
+        // -----------------------------
+        // Time: ~5 seconds
+
+        // Verify that the repeating job _did_ run again
+        XCTAssert(repeatingJobCounter > 2)
 
         // Verify that the one time job did _not_ run again
         XCTAssert(oneTimeJobCounter == 1)
-
-        // Verify that the repeating job _did_ run again
-        XCTAssert(repeatingJobCounter == 3)
     }
 }

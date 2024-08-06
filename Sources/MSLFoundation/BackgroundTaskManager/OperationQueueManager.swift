@@ -153,7 +153,7 @@ extension OperationQueueManager {
     }
 
     /// Start processing the queue. It is possible that the queue will go to sleep if
-    /// no work is available to perform. Furthermore, if there are no providers are registered,
+    /// no work is available to perform. Furthermore, if there are no providers registered,
     /// the queue will go into a deep sleep and will not wake up again until another provider is registered.
     func start() {
         guard self.state != .running else { return }
