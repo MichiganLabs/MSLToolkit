@@ -15,7 +15,7 @@ public protocol ApiRouterRequestable {
     ) async throws -> Property
 }
 
-public final class ApiSessionManager: ApiRouterRequestable {
+public class ApiSessionManager: ApiRouterRequestable {
     public typealias ErrorHandler = (DataResponse<Data, AFError>) -> Error
 
     let session: Session
