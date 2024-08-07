@@ -7,6 +7,7 @@ MSL Networking provides common helper functions to make working with API request
 ## Features
 * [x] Friendly Network Status Codes
 * [x] [Charles Proxy Trust Manager](./documentation/charles_proxy.md)
+* [x] [Api Session Manager](./documentation/api_session_manager.md)
  
 
 ## Installation
