@@ -10,11 +10,18 @@ public enum NetworkAdapterError: Error {
 open class ApiRequestAdapter: RequestAdapter {
     private let scheme: String?
     private let host: String
+    private let port: Int
     private let authHandler: ((URLRequest) -> URLRequest)?
 
-    public init(scheme: String? = nil, host: String, authHandler: ((URLRequest) -> URLRequest)? = nil) {
+    public init(
+        scheme: String? = nil,
+        host: String,
+        port: Int,
+        authHandler: ((URLRequest) -> URLRequest)? = nil
+    ) {
         self.scheme = scheme
         self.host = host
+        self.port = port
         self.authHandler = authHandler
     }
 
@@ -35,6 +42,7 @@ open class ApiRequestAdapter: RequestAdapter {
         var components = URLComponents()
         components.scheme = self.scheme
         components.host = self.host
+        components.port = self.port
         components.path = url.path
         components.query = url.query
         components.fragment = url.fragment
