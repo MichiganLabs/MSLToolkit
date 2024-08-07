@@ -25,7 +25,7 @@ open class ApiRequestAdapter: RequestAdapter {
         self.authHandler = authHandler
     }
 
-    public func adapt(
+    open func adapt(
         _ urlRequest: URLRequest,
         for session: Session,
         completion: @escaping (
