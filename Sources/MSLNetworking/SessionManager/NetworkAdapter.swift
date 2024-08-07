@@ -12,7 +12,7 @@ open class NetworkAdapter: RequestAdapter {
     private let host: String
     private let authHandler: ((URLRequest) -> URLRequest)?
 
-    init(scheme: String? = nil, host: String, authHandler: ((URLRequest) -> URLRequest)? = nil) {
+    public init(scheme: String? = nil, host: String, authHandler: ((URLRequest) -> URLRequest)? = nil) {
         self.scheme = scheme
         self.host = host
         self.authHandler = authHandler
