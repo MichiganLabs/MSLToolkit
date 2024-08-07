@@ -69,7 +69,7 @@ open class ApiSessionManager: ApiRouterRequestable {
         case let .success(data):
             return data
         case let .failure(error):
-            if let handler = self.apiErrorHandler ?? request.errorHandlerOverride {
+            if let handler = request.errorHandlerOverride ?? self.apiErrorHandler {
                 throw handler(response)
             } else {
                 throw error
