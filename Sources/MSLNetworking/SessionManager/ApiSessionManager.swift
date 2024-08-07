@@ -1,7 +1,7 @@
 import Alamofire
 import Foundation
 
-open class ApiSessionManager {
+open class ApiSessionManager: ApiRouterRequestable {
     public typealias ErrorHandler = (DataResponse<Data, AFError>) -> Error
 
     public let session: Session
@@ -52,9 +52,7 @@ open class ApiSessionManager {
             }
         }
     }
-}
 
-extension ApiSessionManager: ApiRouterRequestable {
     public func request<Response: Decodable>(
         from request: ApiRouter,
         using decoder: JSONDecoder = JSONDecoder()

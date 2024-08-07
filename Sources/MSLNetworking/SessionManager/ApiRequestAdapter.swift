@@ -10,13 +10,13 @@ public enum NetworkAdapterError: Error {
 open class ApiRequestAdapter: RequestAdapter {
     private let scheme: String?
     private let host: String
-    private let port: Int
+    private let port: Int?
     private let authHandler: ((URLRequest) -> URLRequest)?
 
     public init(
         scheme: String? = nil,
         host: String,
-        port: Int,
+        port: Int? = nil,
         authHandler: ((URLRequest) -> URLRequest)? = nil
     ) {
         self.scheme = scheme
