@@ -4,7 +4,7 @@ import Foundation
 open class ApiSessionManager {
     public typealias ErrorHandler = (DataResponse<Data, AFError>) -> Error
 
-    let session: Session
+    public let session: Session
 
     /// Default validation will be used if none is specified
     let apiValidation: Alamofire.DataRequest.Validation?
