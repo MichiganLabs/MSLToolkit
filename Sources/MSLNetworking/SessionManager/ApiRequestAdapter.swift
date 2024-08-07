@@ -7,7 +7,7 @@ public enum NetworkAdapterError: Error {
 
 /// A convenience class for providing dynamic data (such as authentication) to a request
 /// that is agnostic of a specific endpoint and required for the API.
-open class NetworkAdapter: RequestAdapter {
+open class ApiRequestAdapter: RequestAdapter {
     private let scheme: String?
     private let host: String
     private let authHandler: ((URLRequest) -> URLRequest)?

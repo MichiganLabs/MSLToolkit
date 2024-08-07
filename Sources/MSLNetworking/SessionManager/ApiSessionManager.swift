@@ -1,21 +1,7 @@
 import Alamofire
 import Foundation
 
-/// Use this in your dependency injection to obfuscate the underlying session manager
-public protocol ApiRouterRequestable {
-    func request<Response: Decodable>(
-        from request: ApiRouter,
-        using decoder: JSONDecoder
-    ) async throws -> Response
-
-    func request<Response: Decodable, Property: Any>(
-        _ keyPath: KeyPath<Response, Property>,
-        from request: ApiRouter,
-        using decoder: JSONDecoder
-    ) async throws -> Property
-}
-
-open class ApiSessionManager: ApiRouterRequestable {
+open class ApiSessionManager {
     public typealias ErrorHandler = (DataResponse<Data, AFError>) -> Error
 
     let session: Session
@@ -25,6 +11,14 @@ open class ApiSessionManager: ApiRouterRequestable {
 
     let apiErrorHandler: ErrorHandler?
 
+    /// Initializes a new instance of `ApiSessionManager`.
+    ///
+    /// - Parameters:
+    ///   - session: The `Session` instance to be used for making network requests. Defaults to `Session.default`.
+    ///   - validation: An optional validation closure that will be used to validate the response. If no validation
+    ///   is provided, the default Alamofire validation will be used. Defaults to `nil`.
+    ///   - errorHandler: An optional error handler closure that will be used to handle errors in the response.
+    ///   Defaults to `nil`.
     public init(
         session: Session = Session.default,
         validation: Alamofire.DataRequest.Validation? = nil,
@@ -33,24 +27,6 @@ open class ApiSessionManager: ApiRouterRequestable {
         self.session = session
         self.apiValidation = validation
         self.apiErrorHandler = errorHandler
-    }
-
-    public func request<Response: Decodable>(
-        from request: ApiRouter,
-        using decoder: JSONDecoder = JSONDecoder()
-    ) async throws -> Response {
-        let data = try await self.execute(request)
-        return try decoder.decode(Response.self, from: data)
-    }
-
-    public func request<Response: Decodable, Property: Any>(
-        _ keyPath: KeyPath<Response, Property>,
-        from request: ApiRouter,
-        using decoder: JSONDecoder = JSONDecoder()
-    ) async throws -> Property {
-        let data = try await self.execute(request)
-        let decoded = try decoder.decode(Response.self, from: data)
-        return decoded[keyPath: keyPath]
     }
 
     private func execute(_ request: ApiRouter) async throws -> Data {
@@ -75,6 +51,26 @@ open class ApiSessionManager: ApiRouterRequestable {
                 throw error
             }
         }
+    }
+}
+
+extension ApiSessionManager: ApiRouterRequestable {
+    public func request<Response: Decodable>(
+        from request: ApiRouter,
+        using decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> Response {
+        let data = try await self.execute(request)
+        return try decoder.decode(Response.self, from: data)
+    }
+
+    public func request<Response: Decodable, Property: Any>(
+        _ keyPath: KeyPath<Response, Property>,
+        from request: ApiRouter,
+        using decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> Property {
+        let data = try await self.execute(request)
+        let decoded = try decoder.decode(Response.self, from: data)
+        return decoded[keyPath: keyPath]
     }
 }
 

@@ -16,7 +16,7 @@ class API: ApiSessionManager {
     var user: String? = nil
 
     init() {
-        let adapter = NetworkAdapter(host: "api.example.com", authHandler: { request in
+        let adapter = ApiRequestAdapter(host: "api.example.com", authHandler: { request in
             var request = request
 
             if let user = Self.shared.user {
@@ -35,7 +35,7 @@ class API: ApiSessionManager {
 In this example:
 
 * `API` is a singleton class that subclasses `ApiSessionManager`.
-* A `NetworkAdapter` is created with a host and an authentication handler that adds an X-API-KEY header if the user is set.
+* A `ApiRequestAdapter` is created with a host and an authentication handler that adds an X-API-KEY header if the user is set.
 * An Interceptor is created with the adapter and passed to the Session initializer.
 * The `super.init(session:)` call initializes the `ApiSessionManager` with the configured session.
 
