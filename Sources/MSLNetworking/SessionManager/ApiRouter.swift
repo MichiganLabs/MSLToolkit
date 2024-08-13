@@ -72,7 +72,7 @@ public extension ApiRouter {
 
         var headers: HTTPHeaders = [:]
 
-        if [.post, .put].contains(self.method) {
+        if [.post, .put, .patch].contains(self.method) {
             headers["Content-Type"] = "application/json"
             headers["Accept"] = "application/json"
         }
