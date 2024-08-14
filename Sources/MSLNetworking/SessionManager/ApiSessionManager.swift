@@ -9,7 +9,11 @@ open class ApiSessionManager {
     /// Default validation will be used if none is specified
     let apiValidation: Alamofire.DataRequest.Validation?
 
+    /// Handler for converting responses returned by the API after failing validation
     let apiErrorHandler: ErrorHandler?
+
+    /// The default decoder to be used on all out going requests
+    let decoder: JSONDecoder
 
     /// Initializes a new instance of `ApiSessionManager`.
     ///
@@ -21,12 +25,14 @@ open class ApiSessionManager {
     ///   Defaults to `nil`.
     public init(
         session: Session = Session.default,
+        decoder: JSONDecoder? = nil,
         validation: Alamofire.DataRequest.Validation? = nil,
         errorHandler: ErrorHandler? = nil
     ) {
         self.session = session
         self.apiValidation = validation
         self.apiErrorHandler = errorHandler
+        self.decoder = decoder ?? JSONDecoder()
     }
 
     private func execute(_ request: ApiRouter) async throws -> Data {
@@ -63,8 +69,10 @@ extension ApiSessionManager: ApiRouterRequestable {
 
     public func request<Response: Decodable>(
         from request: ApiRouter,
-        using decoder: JSONDecoder = JSONDecoder()
+        using decoder: JSONDecoder? = nil
     ) async throws -> Response {
+        let decoder = decoder ?? self.decoder
+
         let data = try await self.execute(request)
         return try decoder.decode(Response.self, from: data)
     }
@@ -79,8 +87,10 @@ extension ApiSessionManager: ApiRouterRequestable {
     public func request<Response: Decodable, Property: Any>(
         _ keyPath: KeyPath<Response, Property>,
         from request: ApiRouter,
-        using decoder: JSONDecoder = JSONDecoder()
+        using decoder: JSONDecoder? = nil
     ) async throws -> Property {
+        let decoder = decoder ?? self.decoder
+
         let data = try await self.execute(request)
         let decoded = try decoder.decode(Response.self, from: data)
         return decoded[keyPath: keyPath]

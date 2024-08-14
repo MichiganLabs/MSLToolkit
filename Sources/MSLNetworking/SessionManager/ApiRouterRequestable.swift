@@ -5,7 +5,7 @@ import Foundation
 public protocol ApiRouterRequestable {
     func request<Response: Decodable>(
         from request: ApiRouter,
-        using decoder: JSONDecoder
+        using decoder: JSONDecoder?
     ) async throws -> Response
 
     func request<Response: Decodable>(
@@ -15,7 +15,7 @@ public protocol ApiRouterRequestable {
     func request<Response: Decodable, Property: Any>(
         _ keyPath: KeyPath<Response, Property>,
         from request: ApiRouter,
-        using decoder: JSONDecoder
+        using decoder: JSONDecoder?
     ) async throws -> Property
 
     func request<Response: Decodable, Property: Any>(
