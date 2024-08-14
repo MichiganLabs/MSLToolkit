@@ -64,7 +64,7 @@ extension ApiSessionManager: ApiRouterRequestable {
     public func request<Response: Decodable>(
         from request: ApiRouter
     ) async throws -> Response {
-        return try await self.request(from: request, using: JSONDecoder())
+        return try await self.request(from: request, using: self.decoder)
     }
 
     public func request<Response: Decodable>(
@@ -81,7 +81,7 @@ extension ApiSessionManager: ApiRouterRequestable {
         _ keyPath: KeyPath<some Decodable, Property>,
         from request: ApiRouter
     ) async throws -> Property {
-        return try await self.request(keyPath, from: request, using: JSONDecoder())
+        return try await self.request(keyPath, from: request, using: self.decoder)
     }
 
     public func request<Response: Decodable, Property: Any>(
