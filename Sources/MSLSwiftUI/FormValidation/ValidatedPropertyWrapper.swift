@@ -98,7 +98,7 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
         self.value = wrappedValue
         self.validation = validation
 
-        let validationResult = validation(self.value)
+        let validationResult = validation(wrappedValue)
         self.status = Self.calculateStatus(
             requirement: requirement,
             value: wrappedValue,
@@ -107,7 +107,7 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
     }
 
     public mutating func reset() {
-        self.value = self.originalValue
+        self.wrappedValue = self.originalValue
     }
 }
 

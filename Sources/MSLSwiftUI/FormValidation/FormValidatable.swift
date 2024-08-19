@@ -1,14 +1,16 @@
 import SwiftUI
 
-public protocol FormValidatable {
-    func isValid() -> Bool
+public protocol FormValidatable: KeyPathListable {
+    mutating func isValid() -> Bool
 
-    func hasChanges() -> Bool
+    mutating func hasChanges() -> Bool
+
+    mutating func nextInvalidProperty() -> String?
 }
 
 public extension FormValidatable {
-    func isValid() -> Bool {
-        let mirror = Mirror(reflecting: self)
+    mutating func isValid() -> Bool {
+        let mirror = self.reflectionCache()
         for child in mirror.children {
             if let field = child.value as? ValidatedProtocol {
                 if case .invalid = field.status {
@@ -19,8 +21,17 @@ public extension FormValidatable {
         return true
     }
 
-    func hasChanges() -> Bool {
-        let mirror = Mirror(reflecting: self)
+    mutating func hasChanges() -> Bool {
+//        for keyPath in Self.allKeyPaths.values {
+//            if let field = self[keyPath: keyPath] as? ValidatedProtocol {
+//                if field.editState == .dirty {
+//                    return true
+//                }
+//            }
+//            print("test")
+//        }
+
+        let mirror = self.reflectionCache()
         for child in mirror.children {
             if let field = child.value as? ValidatedProtocol {
                 if field.editState == .dirty {
@@ -31,8 +42,8 @@ public extension FormValidatable {
         return false
     }
 
-    func getNextInvalidProperty() -> String? {
-        let mirror = Mirror(reflecting: self)
+    mutating func nextInvalidProperty() -> String? {
+        let mirror = self.reflectionCache()
         for child in mirror.children {
             guard let propertyName = child.label else { continue }
 
@@ -60,6 +71,25 @@ public extension FormValidatable {
 //            }
 //        }
 //    }
+}
+
+public protocol FormNavigatable {
+    static var keyPaths: [String: PartialKeyPath<Self>] { get }
+    var nextInvalidProperty: PartialKeyPath<Self>? { get }
+}
+
+extension FormNavigatable {
+    func nextInvalidProperty() -> PartialKeyPath<Self>? {
+        let mirror = Mirror(reflecting: self)
+
+        for child in mirror.children {
+            guard let propertyName = child.label else { continue }
+            if let field = child.value as? ValidatedProtocol, case .invalid = field.status {
+                return Self.keyPaths[propertyName]
+            }
+        }
+        return nil
+    }
 }
 
 public protocol ValidatedProtocol {

@@ -39,6 +39,10 @@ struct UserFormInfo: FormValidatable {
     var dateOfBirth = Date()
 
     var donation: Double? = nil
+
+    mutating func reset() {
+        self._name.reset()
+    }
 }
 
 extension String {
@@ -100,11 +104,12 @@ struct ExampleForm: View {
             .disabled(!self.userInfo.isValid())
 
             Button("Jump To Field") {
-                self.fieldToFocus = self.userInfo.getNextInvalidProperty()
+//                self.fieldToFocus = self.userInfo.getNextInvalidProperty()
             }
 
             Button("Reset") {
                 self.userInfo.reset()
+//                self.userInfo.reset()
             }
 
             if let field = self.fieldToFocus {
