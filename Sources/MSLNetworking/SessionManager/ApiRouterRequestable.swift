@@ -3,6 +3,10 @@ import Foundation
 
 /// Use this in your dependency injection to obfuscate the underlying session manager
 public protocol ApiRouterRequestable {
+    func request(
+        from request: ApiRouter
+    ) async throws -> HTTPURLResponse
+
     func request<Response: Decodable>(
         from request: ApiRouter,
         using decoder: JSONDecoder?
