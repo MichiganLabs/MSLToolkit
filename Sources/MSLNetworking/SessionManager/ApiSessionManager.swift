@@ -35,24 +35,28 @@ open class ApiSessionManager {
         self.decoder = decoder ?? JSONDecoder()
     }
 
-    private func execute(_ request: ApiRouter) async throws -> Data {
+    private func execute(_ request: ApiRouter) async throws -> (HTTPURLResponse, Data) {
         let dataRequest: DataRequest = if let multipartFormData = request.multipartFormData {
             self.session.upload(multipartFormData: multipartFormData, with: request)
         } else {
             self.session.request(request)
         }
 
-        let response = await dataRequest
+        let dataResponse = await dataRequest
             .validate(customValidator: request.validationOverride ?? self.apiValidation)
             .serializingData()
             .response
 
-        switch response.result {
-        case let .success(data):
-            return data
+        switch dataResponse.result {
+        case .success(let data):
+            if let httpResponse = dataResponse.response {
+                return (httpResponse, data)
+            } else {
+                throw URLError(.badServerResponse)
+            }
         case let .failure(error):
             if let handler = request.errorHandlerOverride ?? self.apiErrorHandler {
-                throw handler(response)
+                throw handler(dataResponse)
             } else {
                 throw error
             }
@@ -61,6 +65,12 @@ open class ApiSessionManager {
 }
 
 extension ApiSessionManager: ApiRouterRequestable {
+    public func request(
+        from request: ApiRouter
+    ) async throws -> HTTPURLResponse {
+        return try await self.execute(request).0
+    }
+
     public func request<Response: Decodable>(
         from request: ApiRouter
     ) async throws -> Response {
@@ -73,7 +83,7 @@ extension ApiSessionManager: ApiRouterRequestable {
     ) async throws -> Response {
         let decoder = decoder ?? self.decoder
 
-        let data = try await self.execute(request)
+        let data = try await self.execute(request).1
         return try decoder.decode(Response.self, from: data)
     }
 
@@ -91,7 +101,7 @@ extension ApiSessionManager: ApiRouterRequestable {
     ) async throws -> Property {
         let decoder = decoder ?? self.decoder
 
-        let data = try await self.execute(request)
+        let data = try await self.execute(request).1
         let decoded = try decoder.decode(Response.self, from: data)
         return decoded[keyPath: keyPath]
     }
