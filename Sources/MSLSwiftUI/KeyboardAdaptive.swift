@@ -12,11 +12,17 @@ struct KeyboardAdaptive: ViewModifier {
         GeometryReader { geometry in
             content
                 .padding(.bottom, self.bottomPadding)
-                .onReceive(Publishers.keyboardHeight) { keyboardHeight in
-                    self.bottomPadding = max(0, keyboardHeight - geometry.safeAreaInsets.bottom)
+                .onReceive(Publishers.keyboard) { notification in
+                    self.bottomPadding = max(0, notification.keyboardHeight - geometry.safeAreaInsets.bottom)
                 }
                 .animation(.easeOut(duration: 0.16), value: self.bottomPadding)
         }
+    }
+}
+
+extension Notification {
+    var keyboardHeight: CGFloat {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
     }
 }
 
