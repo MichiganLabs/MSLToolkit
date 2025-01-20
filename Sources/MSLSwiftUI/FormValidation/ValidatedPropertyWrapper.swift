@@ -72,6 +72,7 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
                 stringValue.isEmpty == true
             {
                 // Assign to `nil` when string is empty
+                // swiftlint:disable:next force_cast
                 self.value = assignNilIfEmpty(stringValue) as! Value
             } else {
                 self.value = newValue

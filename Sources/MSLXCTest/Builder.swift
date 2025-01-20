@@ -37,7 +37,10 @@ public extension Buildable {
     ///   - keyPath: The key path of the collection property to add to.
     ///   - value: The element to add to the collection.
     /// - Returns: A copy of the object with the updated collection property.
-    func add<PropertyType: RangeReplaceableCollection>(_ keyPath: WritableKeyPath<Self, PropertyType>, _ value: PropertyType.Element) -> Self {
+    func add<PropertyType: RangeReplaceableCollection>(
+        _ keyPath: WritableKeyPath<Self, PropertyType>,
+        _ value: PropertyType.Element
+    ) -> Self {
         var copy = self
         copy[keyPath: keyPath].append(value)
         return copy
@@ -49,7 +52,10 @@ public extension Buildable {
     ///   - keyPath: The key path of the collection property to add to.
     ///   - function: A function that returns the element to add to the collection.
     /// - Returns: A copy of the object with the updated collection property.
-    func add<PropertyType: RangeReplaceableCollection>(_ keyPath: WritableKeyPath<Self, PropertyType>, _ function: () -> PropertyType.Element) -> Self {
+    func add<PropertyType: RangeReplaceableCollection>(
+        _ keyPath: WritableKeyPath<Self, PropertyType>,
+        _ function: () -> PropertyType.Element
+    ) -> Self {
         var copy = self
         copy[keyPath: keyPath].append(function())
         return copy

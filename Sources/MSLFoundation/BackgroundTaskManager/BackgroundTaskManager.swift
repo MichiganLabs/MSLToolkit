@@ -26,7 +26,8 @@ public final class BackgroundTaskManager {
     /// The current background refresh task that woke up the application
     private var backgroundTask: BGAppRefreshTask?
 
-    /// Create a new BackgroundTaskManager with a unique identifier. This unique identifier will be used when tasks are executed in the background.
+    /// Create a new BackgroundTaskManager with a unique identifier.
+    /// This unique identifier will be used when tasks are executed in the background.
     public init(
         taskId: String
     ) {
