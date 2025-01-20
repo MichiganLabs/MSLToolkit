@@ -8,14 +8,14 @@
 // FormValidation does not handle text formatting. Any text formatting should be
 // handled by the view displaying the value from the form object.
 
-// Ideas:
+// Additional Ideas:
 // - Get "next" required/invalid field
 // - Restrict value changes if validation fails
 // - Dirty / Clean management
 
 import SwiftUI
 
-struct UserFormInfo: FormValidatable {
+struct UserFormInfo: FormValidatable, DefaultValueProvider {
     @FormFieldValidated(
         requirement: .required(nil),
         validation: { $0.count < 3 ? "Name must be at least 3 characters" : nil }
@@ -39,10 +39,6 @@ struct UserFormInfo: FormValidatable {
     var dateOfBirth = Date()
 
     var donation: Double? = nil
-
-    mutating func reset() {
-        self._name.reset()
-    }
 }
 
 extension String {
@@ -59,6 +55,7 @@ extension String {
     }
 }
 
+@available(iOS 15.0, *)
 struct ExampleForm: View {
     @State
     private var userInfo = UserFormInfo()
@@ -66,14 +63,16 @@ struct ExampleForm: View {
     @State
     private var isSubmitted = false
 
-    @State
+    @FocusState
     private var fieldToFocus: String?
+
 
     var body: some View {
         VStack {
             Form {
                 Section(header: Text("Personal Information")) {
                     TextField("Name", text: self.$userInfo.name)
+                        .focused(self.$fieldToFocus, equals: "_name")
                         .overlay(
                             ValidationErrorView(errorMessage: self.userInfo.$name.errorMessage),
                             alignment: .bottomLeading
@@ -104,12 +103,11 @@ struct ExampleForm: View {
             .disabled(!self.userInfo.isValid())
 
             Button("Jump To Field") {
-//                self.fieldToFocus = self.userInfo.getNextInvalidProperty()
+                self.fieldToFocus = self.userInfo.nextInvalidProperty()
             }
 
             Button("Reset") {
                 self.userInfo.reset()
-//                self.userInfo.reset()
             }
 
             if let field = self.fieldToFocus {
@@ -122,6 +120,8 @@ struct ExampleForm: View {
 
             if self.isSubmitted {
                 Text("Submitted!")
+
+
             }
         }
     }
@@ -142,5 +142,9 @@ struct ValidationErrorView: View {
 }
 
 #Preview {
-    ExampleForm()
+    if #available(iOS 15.0, *) {
+        ExampleForm()
+    } else {
+        // Fallback on earlier versions
+    }
 }

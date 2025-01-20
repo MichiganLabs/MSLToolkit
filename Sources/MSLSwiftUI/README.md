@@ -5,6 +5,7 @@ MSL SwiftUI provides common helper functions to work with [SwiftUI.](https://dev
 * [Installation](#installation)
 
 ## Features
+* [x] [FormValidation](./documentation/form_validation.md)
 
 ## Installation
 

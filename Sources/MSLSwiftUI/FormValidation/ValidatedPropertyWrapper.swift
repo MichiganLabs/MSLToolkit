@@ -58,6 +58,10 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
         }
     }
 
+    public mutating func reset() {
+        self.wrappedValue = self.originalValue
+    }
+
     public var wrappedValue: Value {
         get { self.value }
         set {
@@ -104,10 +108,6 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
             value: wrappedValue,
             validationResult: validationResult
         )
-    }
-
-    public mutating func reset() {
-        self.wrappedValue = self.originalValue
     }
 }
 
