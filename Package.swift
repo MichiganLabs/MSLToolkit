@@ -80,7 +80,7 @@ let package = Package(
         ),
         .testTarget(
             name: "MSLFoundationTests",
-            dependencies: ["MSLFoundation"]
+            dependencies: ["MSLFoundation", "MSLXCTest"]
         ),
     ]
 )
