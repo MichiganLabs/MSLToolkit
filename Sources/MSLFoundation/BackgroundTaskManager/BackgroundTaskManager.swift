@@ -11,7 +11,10 @@ private let logger: Logger = {
 }()
 
 public enum EnqueueType {
+    /// Replace the existing task with the provided one
     case replace
+
+    /// Keep the existing task instead of using the provided one
     case keep
 }
 
@@ -23,6 +26,7 @@ public final class BackgroundTaskManager {
     /// The current background refresh task that woke up the application
     private var backgroundTask: BGAppRefreshTask?
 
+    /// Create a new BackgroundTaskManager with a unique identifier. This unique identifier will be used when tasks are executed in the background.
     public init(
         taskId: String
     ) {
@@ -63,18 +67,23 @@ public final class BackgroundTaskManager {
 // MARK: Public Functions
 
 public extension BackgroundTaskManager {
+    /// Adds a new task to the manager. EnqueueType can be used to either `keep` or `replace` a provider that
+    /// has already been register with the same `identifier`.
     func register(type: EnqueueType = .keep, provider: OperationWorkProvider) {
         self.queue.register(type: type, provider: provider)
     }
 
+    /// Removes a task from the background manager.
     func unregister(provider: OperationWorkProvider) {
         self.queue.unregister(provider: provider)
     }
 
+    /// Begin runing registered tasks.
     func start() {
         self.queue.start()
     }
 
+    /// Prevent the BackgroundTaskManager from running any tasks.
     func stop() {
         self.queue.stop()
     }

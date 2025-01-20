@@ -15,7 +15,7 @@ The `BackgroundTaskManager` is a utility designed to manage and execute backgrou
 To use the `BackgroundTaskManager`, you need to initialize it and register your task providers.
 
 ```swift
-let backgroundTaskManager = BackgroundTaskManager()
+let backgroundTaskManager = BackgroundTaskManager(taskId: "com.example")
 ```
 
 ### Starting the Manager
@@ -58,7 +58,7 @@ class MyTaskProvider: OperationWorkProvider {
     }
 }
 
-let backgroundTaskManager = BackgroundTaskManager()
+let backgroundTaskManager = BackgroundTaskManager(taskId: "com.example")
 let taskProvider = MyTaskProvider()
 
 backgroundTaskManager.register(provider: taskProvider)
