@@ -5,7 +5,8 @@ MSL Foundation provides common helper functions to work at all levels of a proje
 * [Installation](#installation)
 
 ## Features
-* [x] [AppMigrator](./documentation/database_manager.md)
+* [x] [AppMigrator](./documentation/app_migrator.md)
+* [x] [Background Task Manager](./documentation/background_task_manager.md)
 
 ## Installation
 
