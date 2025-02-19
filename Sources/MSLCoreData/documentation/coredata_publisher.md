@@ -46,7 +46,7 @@ func buildDataStore() -> DataStore<[MySharedModel]> {
       cacheName: nil
     )
 
-    let publisher = DataStorePublisher<MyEntity>(
+    let publisher = CoreDataPublisher<MyEntity>(
         fetchedRequestController: controller
     )
 

@@ -2,13 +2,13 @@ import Combine
 import CoreData
 import MSLFoundation
 
-protocol ModelConvertible {
+public protocol ModelConvertible {
     associatedtype Model: Any
     func toModel() -> Model
 }
 
 /// Wraps NSFetchedResultsController and converts the delegate callback methods into a publisher (stream)
-final class CoreDataPublisher<
+public final class CoreDataPublisher<
     EntityType: ModelConvertible & NSFetchRequestResult
 >: NSObject, NSFetchedResultsControllerDelegate, Publishing {
     private(set) var fetchedRequestController: NSFetchedResultsController<EntityType>
@@ -44,7 +44,7 @@ final class CoreDataPublisher<
         }
     }
 
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let controller = controller as? NSFetchedResultsController<EntityType> else { return }
         self.emitObjects(for: controller)
     }
