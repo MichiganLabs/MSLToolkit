@@ -92,7 +92,7 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
         return self
     }
 
-    init(
+    public init(
         wrappedValue: Value,
         requirement: FormFieldRequirement = .notRequired,
         validation: @escaping (Value) -> String?
