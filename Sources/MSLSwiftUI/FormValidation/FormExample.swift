@@ -17,13 +17,13 @@ import SwiftUI
 
 struct UserFormInfo: FormValidatable, DefaultValueProvider {
     @FormFieldValidated(
-        requirement: .required("Name is required"),
+        .required("Name is required"),
         validation: { $0.count < 3 ? "Name must be at least 3 characters" : nil }
     )
     var name = ""
 
     @FormFieldValidated(
-        requirement: .required("Phone number is required"),
+        .required("Phone number is required"),
         validation: { value in
             !(value?.isPhoneNumberValid() ?? false) ? "Phone number is not valid." : nil
         }

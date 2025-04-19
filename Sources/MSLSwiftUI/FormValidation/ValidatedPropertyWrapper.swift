@@ -94,7 +94,7 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
 
     public init(
         wrappedValue: Value,
-        requirement: FormFieldRequirement = .optional,
+        _ requirement: FormFieldRequirement = .optional,
         validation: @escaping (Value) -> String? = { _ in return nil }
     ) {
         self.originalValue = wrappedValue
