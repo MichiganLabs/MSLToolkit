@@ -5,7 +5,7 @@ public enum FormFieldRequirement: Equatable {
     case required(_ message: String?)
 
     /// A value is not required for this field
-    case notRequired
+    case optional
 }
 
 public enum FormFieldStatus: Equatable {
@@ -94,8 +94,8 @@ public struct FormFieldValidated<Value: Equatable>: ValidatedProtocol {
 
     public init(
         wrappedValue: Value,
-        requirement: FormFieldRequirement = .notRequired,
-        validation: @escaping (Value) -> String?
+        requirement: FormFieldRequirement = .optional,
+        validation: @escaping (Value) -> String? = { _ in return nil }
     ) {
         self.originalValue = wrappedValue
 

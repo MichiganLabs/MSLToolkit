@@ -17,13 +17,13 @@ import SwiftUI
 
 struct UserFormInfo: FormValidatable, DefaultValueProvider {
     @FormFieldValidated(
-        requirement: .required(nil),
+        requirement: .required("Name is required"),
         validation: { $0.count < 3 ? "Name must be at least 3 characters" : nil }
     )
     var name = ""
 
     @FormFieldValidated(
-        requirement: .required("This field is required"),
+        requirement: .required("Phone number is required"),
         validation: { value in
             !(value?.isPhoneNumberValid() ?? false) ? "Phone number is not valid." : nil
         }
@@ -79,6 +79,7 @@ struct ExampleForm: View {
                         )
 
                     TextField("Phone Number", text: self.$userInfo.phoneNumber ?? "")
+                        .focused(self.$fieldToFocus, equals: "_phoneNumber")
                         .keyboardType(.phonePad)
                         .overlay(
                             ValidationErrorView(errorMessage: self.userInfo.$phoneNumber.errorMessage),
