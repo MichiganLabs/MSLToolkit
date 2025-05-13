@@ -147,6 +147,8 @@ extension FormFieldValidated {
             return true
         } else if (value as? String)?.isEmpty == true {
             return true
+        } else if (value as? [Any])?.isEmpty == true {
+            return true
         } else {
             return false
         }
